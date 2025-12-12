@@ -4,250 +4,286 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Palk Bay Marine Biodiversity Inventory</title>
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <!-- Stable CDN Links -->
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Using a specific version of Lucide to ensure stability -->
+    <script src="https://unpkg.com/lucide@0.263.1/dist/umd/lucide.min.js"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+Tamil:wght@400;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f5f0e6; }
         .tamil-text { font-family: 'Noto Sans Tamil', sans-serif; }
+        #error-boundary { 
+            display: none; 
+            padding: 20px; 
+            background: #fee2e2; 
+            color: #991b1b; 
+            border: 1px solid #f87171; 
+            margin: 20px; 
+            border-radius: 8px;
+            font-family: monospace;
+        }
     </style>
 </head>
 <body>
+    <div id="error-boundary"></div>
     <div id="root"></div>
+
+    <!-- Data Injection: Stored safely in a JSON script tag -->
+    <script id="site-data" type="application/json">
+        {"headerTitle":"Palk Bay Marine Biodiversity Inventory","pages":{"about":{"title":"About the Project","content":"The Palk Bay Marine Biodiversity Inventory is a comprehensive initiative to document the rich marine life of the Palk Strait. This project aims to provide researchers, students, and conservationists with detailed data on the diverse species found in these unique seagrass meadows and shallow waters."},"team":{"title":"Our Research Team","content":"Led by the Department of Fisheries at the University of Jaffna, our team consists of marine biologists, taxonomists, and field researchers dedicated to marine conservation."},"submit":{"title":"Submit Observation Data","content":"We welcome contributions from the scientific community and citizen scientists. If you have observed rare species in the Palk Bay region, please contact us to submit your data and photographs for verification."},"contact":{"title":"Contact Us","content":"For inquiries, collaborations, or data requests, please reach out to us at:\n\nDepartment of Fisheries\nUniversity of Jaffna\nSri Lanka\n\nEmail: info@palkbaybiodiversity.org"}},"categories":[{"id":"finfish","name":"Finfish","icon":"Fish","image":"https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=500&q=80"},{"id":"sharks","name":"Sharks","icon":"Fish","image":"https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=500&q=80"},{"id":"skates","name":"Skates & Rays","icon":"Anchor","image":"https://images.unsplash.com/photo-1559868623-7463f25539d0?auto=format&fit=crop&w=500&q=80"},{"id":"shrimps","name":"Shrimps","icon":"Anchor","image":"https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=500&q=80"},{"id":"crabs","name":"Crabs","icon":"Anchor","image":"https://images.unsplash.com/photo-1551810571-c063b5167098?auto=format&fit=crop&w=500&q=80"},{"id":"lobsters","name":"Lobsters","icon":"Anchor","image":"https://images.unsplash.com/photo-1599572620721-0c679294e022?auto=format&fit=crop&w=500&q=80"},{"id":"seacucumber","name":"Sea Cucumber","icon":"Anchor","image":"https://images.unsplash.com/photo-1629828552199-0c6488779b57?auto=format&fit=crop&w=500&q=80"},{"id":"cephalopods","name":"Cuttlefish & Squids","icon":"Anchor","image":"https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?auto=format&fit=crop&w=500&q=80"},{"id":"octopus","name":"Octopus","icon":"Anchor","image":"https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?auto=format&fit=crop&w=500&q=80"},{"id":"others","name":"Others","icon":"Anchor","image":"https://images.unsplash.com/photo-1457144889600-0e54d6d37672?auto=format&fit=crop&w=500&q=80"}],"families":{"finfish":[{"id":"syngnathidae","name":"Syngnathidae","common":"Seahorses & Pipefishes","image":"https://images.unsplash.com/photo-1550949080-692a433292ce?auto=format&fit=crop&w=400&q=80"},{"id":"carangidae","name":"Carangidae","common":"Jacks & Pompanos","image":"https://images.unsplash.com/photo-1544552866-d3ed42536cfd?auto=format&fit=crop&w=400&q=80"}],"sharks":[{"id":"carcharhinidae","name":"Carcharhinidae","common":"Requiem Sharks","image":"https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=400&q=80"}]},"speciesList":{"syngnathidae":[{"id":"h_palkensis","commonName":"Palk Bay Striped Seahorse","scientificName":"Hippocampus palkensis","image":"https://images.unsplash.com/photo-1596483756306-444a2c5a2c26?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"},{"id":"h_kuda","commonName":"Common Seahorse","scientificName":"Hippocampus kuda","image":"https://images.unsplash.com/photo-1518299863243-b26a8d67a149?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"}]},"speciesDetails":{"h_palkensis":{"commonName":"Palk Bay Striped Seahorse","scientificName":"Hippocampus palkensis","tamilName":"குதிரை மீன் (Kuthirai Meen)","iucnStatus":"VULNERABLE","taxonomyPath":["Animalia","Chordata","Actinopterygii","Syngnathiformes","Syngnathidae","Hippocampus","H. palkensis"],"quickFacts":{"size":"12-15 cm","depth":"2-10 m","habitat":"Seagrass beds","observationFreq":"Uncommon","occurrence":"Seasonal","economicValue":"Low"},"images":{"illustration":"https://images.unsplash.com/photo-1550949080-692a433292ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80","main":"https://images.unsplash.com/photo-1596483756306-444a2c5a2c26?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"},"description":{"title":"Description","text":"The Palk Bay Striped Seahorse is a distinct syngnathid found exclusively in the shallow seagrass meadows of the Palk Strait. It is known for its male brooding behavior and unique striped coloration. The Palk Bay Striped Seahorse has an elongate body encased in bony rings. In contrast with other syngnathids in the region, it exhibits distinct dark striping across the dorsal sections of the torso.\n\nInhabiting the unique and highly biodiverse seagrass meadows, it relies on camouflage to blend in with the dense vegetation of Cymodocea serrulata and Enhalus acoroides. Recent surveys indicate that populations are fragmented due to trawling activities in the Palk Bay region."},"classification":{"kingdom":"Animalia","phylum":"Chordata","class":"Actinopterygii","order":"Syngnathiformes","family":"Syngnathidae","genus":"Hippocampus","species":"H. palkensis"},"similarSpecies":[{"id":1,"name":"H. kuda","common":"Common Seahorse","image":"https://images.unsplash.com/photo-1518299863243-b26a8d67a149?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"},{"id":2,"name":"S. biac","common":"Alligator Pipefish","image":"https://images.unsplash.com/photo-1570527376662-358045617c60?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"}],"resources":[{"id":1,"name":"WoRMS","url":"#","type":"blue-900"},{"id":2,"name":"FishBase","url":"#","type":"blue-600"},{"id":3,"name":"IUCN Red List","url":"#","type":"gray-700"},{"id":4,"name":"iNaturalist","url":"#","type":"green-700"}]}},"footer":{"copyright":"© 2025 Department of Fisheries, University of Jaffna, Sri Lanka. All rights reserved.","attribution":"This initiative is supported by the BiMReN Research Grant, funded by the Bay of Bengal Programme Inter-Governmental Organisation (BOBP-IGO)."}}
+    </script>
+
     <script type="text/babel">
-        // --- INJECTED DATA ---
-        const INITIAL_DB = {"headerTitle":"Palk Bay Marine Biodiversity Inventory","pages":{"about":{"title":"About the Project","content":"The Palk Bay Marine Biodiversity Inventory is a comprehensive initiative to document the rich marine life of the Palk Strait. This project aims to provide researchers, students, and conservationists with detailed data on the diverse species found in these unique seagrass meadows and shallow waters."},"team":{"title":"Our Research Team","content":"Led by the Department of Fisheries at the University of Jaffna, our team consists of marine biologists, taxonomists, and field researchers dedicated to marine conservation."},"submit":{"title":"Submit Observation Data","content":"We welcome contributions from the scientific community and citizen scientists. If you have observed rare species in the Palk Bay region, please contact us to submit your data and photographs for verification."},"contact":{"title":"Contact Us","content":"For inquiries, collaborations, or data requests, please reach out to us at:\\n\\nDepartment of Fisheries\\nUniversity of Jaffna\\nSri Lanka\\n\\nEmail: info@palkbaybiodiversity.org"}},"categories":[{"id":"finfish","name":"Finfish","icon":"Fish","image":"https://images.unsplash.com/photo-1535591273668-578e31182c4f?auto=format&fit=crop&w=500&q=80"},{"id":"sharks","name":"Sharks","icon":"Fish","image":"https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=500&q=80"},{"id":"skates","name":"Skates & Rays","icon":"Anchor","image":"https://images.unsplash.com/photo-1559868623-7463f25539d0?auto=format&fit=crop&w=500&q=80"},{"id":"shrimps","name":"Shrimps","icon":"Anchor","image":"https://images.unsplash.com/photo-1565680018434-b513d5e5fd47?auto=format&fit=crop&w=500&q=80"},{"id":"crabs","name":"Crabs","icon":"Anchor","image":"https://images.unsplash.com/photo-1551810571-c063b5167098?auto=format&fit=crop&w=500&q=80"},{"id":"lobsters","name":"Lobsters","icon":"Anchor","image":"https://images.unsplash.com/photo-1599572620721-0c679294e022?auto=format&fit=crop&w=500&q=80"},{"id":"seacucumber","name":"Sea Cucumber","icon":"Anchor","image":"https://images.unsplash.com/photo-1629828552199-0c6488779b57?auto=format&fit=crop&w=500&q=80"},{"id":"cephalopods","name":"Cuttlefish & Squids","icon":"Anchor","image":"https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?auto=format&fit=crop&w=500&q=80"},{"id":"octopus","name":"Octopus","icon":"Anchor","image":"https://images.unsplash.com/photo-1545671913-b89ac1b4ac10?auto=format&fit=crop&w=500&q=80"},{"id":"others","name":"Others","icon":"Anchor","image":"https://images.unsplash.com/photo-1457144889600-0e54d6d37672?auto=format&fit=crop&w=500&q=80"}],"families":{"finfish":[{"id":"syngnathidae","name":"Syngnathidae","common":"Seahorses & Pipefishes","image":"https://images.unsplash.com/photo-1550949080-692a433292ce?auto=format&fit=crop&w=400&q=80"},{"id":"carangidae","name":"Carangidae","common":"Jacks & Pompanos","image":"https://images.unsplash.com/photo-1544552866-d3ed42536cfd?auto=format&fit=crop&w=400&q=80"}],"sharks":[{"id":"carcharhinidae","name":"Carcharhinidae","common":"Requiem Sharks","image":"https://images.unsplash.com/photo-1560275619-4662e36fa65c?auto=format&fit=crop&w=400&q=80"}]},"speciesList":{"syngnathidae":[{"id":"h_palkensis","commonName":"Palk Bay Striped Seahorse","scientificName":"Hippocampus palkensis","image":"https://images.unsplash.com/photo-1596483756306-444a2c5a2c26?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"},{"id":"h_kuda","commonName":"Common Seahorse","scientificName":"Hippocampus kuda","image":"https://images.unsplash.com/photo-1518299863243-b26a8d67a149?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"}]},"speciesDetails":{"h_palkensis":{"commonName":"Palk Bay Striped Seahorse","scientificName":"Hippocampus palkensis","tamilName":"குதிரை மீன் (Kuthirai Meen)","iucnStatus":"VULNERABLE","taxonomyPath":["Animalia","Chordata","Actinopterygii","Syngnathiformes","Syngnathidae","Hippocampus","H. palkensis"],"quickFacts":{"size":"12-15 cm","depth":"2-10 m","habitat":"Seagrass beds","observationFreq":"Uncommon","occurrence":"Seasonal","economicValue":"Low"},"images":{"illustration":"https://images.unsplash.com/photo-1550949080-692a433292ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80","main":"https://images.unsplash.com/photo-1596483756306-444a2c5a2c26?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"},"description":{"title":"Description","text":"The Palk Bay Striped Seahorse is a distinct syngnathid found exclusively in the shallow seagrass meadows of the Palk Strait. It is known for its male brooding behavior and unique striped coloration. The Palk Bay Striped Seahorse has an elongate body encased in bony rings. In contrast with other syngnathids in the region, it exhibits distinct dark striping across the dorsal sections of the torso.\\n\\nInhabiting the unique and highly biodiverse seagrass meadows, it relies on camouflage to blend in with the dense vegetation of Cymodocea serrulata and Enhalus acoroides. Recent surveys indicate that populations are fragmented due to trawling activities in the Palk Bay region."},"classification":{"kingdom":"Animalia","phylum":"Chordata","class":"Actinopterygii","order":"Syngnathiformes","family":"Syngnathidae","genus":"Hippocampus","species":"H. palkensis"},"similarSpecies":[{"id":1,"name":"H. kuda","common":"Common Seahorse","image":"https://images.unsplash.com/photo-1518299863243-b26a8d67a149?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"},{"id":2,"name":"S. biac","common":"Alligator Pipefish","image":"https://images.unsplash.com/photo-1570527376662-358045617c60?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80"}],"resources":[{"id":1,"name":"WoRMS","url":"#","type":"blue-900"},{"id":2,"name":"FishBase","url":"#","type":"blue-600"},{"id":3,"name":"IUCN Red List","url":"#","type":"gray-700"},{"id":4,"name":"iNaturalist","url":"#","type":"green-700"}]}},"footer":{"copyright":"© 2025 Department of Fisheries, University of Jaffna, Sri Lanka. All rights reserved.","attribution":"This initiative is supported by the BiMReN Research Grant, funded by the Bay of Bengal Programme Inter-Governmental Organisation (BOBP-IGO)."}};
-
-        // --- ICONS MAPPING ---
-        const Icons = {
-            Waves: 'waves', Search: 'search', ChevronDown: 'chevron-down', Ruler: 'ruler',
-            ArrowDownToLine: 'arrow-down-to-line', Sprout: 'sprout', Eye: 'eye',
-            Calendar: 'calendar', Coins: 'coins', ExternalLink: 'external-link',
-            Bird: 'bird', ChevronRight: 'chevron-right', ArrowLeft: 'arrow-left',
-            Fish: 'fish', Anchor: 'anchor', Users: 'users', FileText: 'file-text',
-            Mail: 'mail', Grid: 'grid'
+        // Error trapping
+        window.onerror = function(message, source, lineno, colno, error) {
+            const el = document.getElementById('error-boundary');
+            el.style.display = 'block';
+            el.innerHTML = '<strong>Error:</strong> ' + message + '<br><small>' + source + ':' + lineno + '</small>';
         };
 
-        const Icon = ({ name, className }) => {
-            const iconName = Icons[name] || 'help-circle';
-            return <i data-lucide={iconName} className={className}></i>;
-        };
+        try {
+            // --- LOAD DATA ---
+            const INITIAL_DB = JSON.parse(document.getElementById('site-data').textContent);
+            const { useState, useEffect } = React;
 
-        // --- COMPONENTS ---
-        
-        const Navbar = ({ title, setView }) => (
-            <header className="bg-[#0d3b5e] text-white py-3 px-6 shadow-md sticky top-0 z-50">
-                <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-                    <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView({ type: 'home' })}>
-                        <div className="bg-white rounded-full p-1 w-10 h-10 flex items-center justify-center text-[#0d3b5e]">
-                            <Icon name="Waves" className="w-6 h-6" />
-                        </div>
-                        <h1 className="text-xl font-bold tracking-tight">{title}</h1>
-                    </div>
-                    <nav className="flex items-center gap-5 text-sm font-medium">
-                        <button onClick={() => setView({ type: 'home' })} className="hover:text-gray-300">Home</button>
-                        <button onClick={() => setView({ type: 'page', id: 'about' })} className="hover:text-gray-300">About Project</button>
-                        <button onClick={() => setView({ type: 'page', id: 'team' })} className="hover:text-gray-300">Team</button>
-                        <button onClick={() => setView({ type: 'page', id: 'submit' })} className="hover:text-gray-300">Submit Data</button>
-                        <button onClick={() => setView({ type: 'page', id: 'contact' })} className="hover:text-gray-300">Contact Us</button>
-                    </nav>
-                </div>
-            </header>
-        );
-
-        const Footer = ({ data }) => (
-            <footer className="bg-[#0d3b5e] text-white py-8 text-center mt-auto">
-                <div className="max-w-7xl mx-auto px-4">
-                    <p className="font-semibold mb-2">{data.copyright}</p>
-                    <p className="text-sm text-gray-300">{data.attribution}</p>
-                </div>
-            </footer>
-        );
-
-        const CategoryGrid = ({ categories, onSelect }) => (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6">
-                {categories.map(cat => (
-                    <div key={cat.id} onClick={() => onSelect(cat.id)} className="bg-white rounded-lg shadow-sm hover:shadow-md transition cursor-pointer overflow-hidden border border-gray-200 group">
-                        <div className="h-32 bg-gray-100 relative">
-                            <img src={cat.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-                            <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition"></div>
-                        </div>
-                        <div className="p-3 text-center">
-                            <h3 className="font-bold text-gray-800 group-hover:text-blue-700">{cat.name}</h3>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        );
-
-        const ListGrid = ({ items, onSelect, title, backAction }) => (
-            <div className="max-w-7xl mx-auto p-6">
-                <button onClick={backAction} className="flex items-center text-blue-700 mb-4 font-semibold hover:underline">
-                    <Icon name="ArrowLeft" className="w-4 h-4 mr-1" /> Back
-                </button>
-                <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">{title}</h2>
-                {items && items.length > 0 ? (
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                        {items.map(item => (
-                            <div key={item.id} onClick={() => onSelect(item.id)} className="bg-white rounded-lg shadow-sm hover:shadow-md transition cursor-pointer overflow-hidden border border-gray-200 group">
-                                <div className="h-48 bg-gray-100">
-                                    <img src={item.image} className="w-full h-full object-cover" />
-                                </div>
-                                <div className="p-4">
-                                    <h3 className="font-bold text-lg text-gray-800 leading-tight mb-1 group-hover:text-blue-700">{item.common || item.commonName}</h3>
-                                    <p className="text-sm text-gray-500 italic">{item.name || item.scientificName}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="text-center py-20 text-gray-500 bg-white rounded border border-dashed">
-                        No entries found in this category yet.
-                    </div>
-                )}
-            </div>
-        );
-
-        // --- MAIN APP LOGIC ---
-        const App = () => {
-            const [view, setView] = React.useState({ type: 'home' });
-            const [db, setDb] = React.useState(INITIAL_DB);
-
-            // Effect to refresh icons
-            React.useEffect(() => {
-                if (window.lucide) window.lucide.createIcons();
-            }, [view]);
-
-            const renderContent = () => {
-                if (view.type === 'home') {
-                    return (
-                        <div className="max-w-7xl mx-auto w-full">
-                            <div className="p-6 text-center">
-                                <h2 className="text-3xl font-bold text-[#0d3b5e] mb-2">Explore Marine Life</h2>
-                                <p className="text-gray-600">Select a category to view families and species</p>
-                            </div>
-                            <CategoryGrid categories={db.categories} onSelect={(id) => setView({ type: 'category', id })} />
-                        </div>
-                    );
-                }
-                
-                if (view.type === 'category') {
-                    const catId = view.id;
-                    const catName = db.categories.find(c => c.id === catId)?.name;
-                    const families = db.families[catId] || [];
-                    return <ListGrid title={catName + " Families"} items={families} onSelect={(fid) => setView({ type: 'family', catId, id: fid })} backAction={() => setView({ type: 'home' })} />;
-                }
-
-                if (view.type === 'family') {
-                    const famId = view.id;
-                    const famName = db.families[view.catId]?.find(f => f.id === famId)?.name;
-                    const species = db.speciesList[famId] || [];
-                    return <ListGrid title={famName + " Species"} items={species} onSelect={(sid) => setView({ type: 'species', catId: view.catId, famId, id: sid })} backAction={() => setView({ type: 'category', id: view.catId })} />;
-                }
-
-                if (view.type === 'species') {
-                    // NOTE: In a real app, we'd pull from db.speciesDetails[view.id]
-                    // For this template, we default to the filled-out "Palk Bay Seahorse" data if ID matches, or show a generic placeholder
-                    const spData = db.speciesDetails[view.id] || db.speciesDetails['h_palkensis']; 
-                    
-                    return (
-                        <div className="max-w-7xl mx-auto w-full p-4">
-                            <button onClick={() => setView({ type: 'family', catId: view.catId, id: view.famId })} className="flex items-center text-blue-700 mb-4 font-semibold hover:underline">
-                                <Icon name="ArrowLeft" className="w-4 h-4 mr-1" /> Back to Family
-                            </button>
-                            
-                            {/* Render Species Detail View (Simplified for string injection) */}
-                            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                                {/* Left Sidebar */}
-                                <aside className="lg:col-span-3 space-y-4">
-                                    <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
-                                        <h2 className="font-bold text-lg mb-4 text-gray-800 border-b pb-2">Quick Facts</h2>
-                                        <div className="mb-4 flex justify-center">
-                                            <div className="relative w-48 h-56">
-                                                <img src={spData.images.illustration} className="w-full h-full object-contain filter grayscale opacity-90 mix-blend-multiply" style={{transform: 'scaleX(-1)'}} />
-                                            </div>
-                                        </div>
-                                        <div className="mb-4">
-                                            <h3 className="font-bold text-lg leading-tight">{spData.commonName}</h3>
-                                            <p className="italic text-gray-600 text-sm mb-2">{spData.scientificName}</p>
-                                        </div>
-                                        <div className="bg-[#ff6b35] text-white rounded px-2 py-1 inline-block text-xs font-bold mb-6 uppercase">IUCN: {spData.iucnStatus}</div>
-                                        <hr className="border-gray-200 mb-4" />
-                                        <div className="space-y-3 text-sm text-gray-700">
-                                            {/* Facts Loop */}
-                                            {Object.entries(spData.quickFacts).map(([k, v]) => (
-                                                <div key={k} className="flex items-center gap-3">
-                                                    <Icon name="Ruler" className="w-4 h-4 text-teal-600" /> 
-                                                    <div><span className="font-semibold block text-xs text-gray-500 capitalize">{k}</span><span>{v}</span></div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </aside>
-
-                                {/* Main Content */}
-                                <section className="lg:col-span-6 space-y-4">
-                                    <div className="bg-white p-1 rounded shadow-sm border border-gray-200">
-                                        <div className="relative w-full h-80 rounded overflow-hidden">
-                                            <img src={spData.images.main} className="w-full h-full object-cover" />
-                                        </div>
-                                    </div>
-                                    <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
-                                        <h3 className="font-bold text-xl mb-3 text-gray-800">{spData.description.title}</h3>
-                                        <p className="text-gray-700 leading-relaxed text-sm whitespace-pre-wrap">{spData.description.text}</p>
-                                    </div>
-                                </section>
-
-                                {/* Right Sidebar */}
-                                <aside className="lg:col-span-3 space-y-4">
-                                    <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
-                                        <h3 className="font-bold text-md mb-3 text-gray-800 border-b pb-2">Scientific Classification</h3>
-                                        <table className="w-full text-sm text-gray-700">
-                                            <tbody>
-                                                {Object.entries(spData.classification).map(([k,v]) => (
-                                                    <tr key={k}><td className="py-1 text-gray-500 text-xs font-semibold capitalize">{k}:</td><td className="py-1 text-right italic">{v}</td></tr>
-                                                ))}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </aside>
-                            </div>
-                        </div>
-                    );
-                }
-
-                if (view.type === 'page') {
-                    const pageData = db.pages[view.id] || { title: "Page Not Found", content: "This page does not exist." };
-                    return (
-                         <div className="max-w-4xl mx-auto p-10 bg-white shadow-sm mt-6 min-h-[50vh]">
-                            <h2 className="text-3xl font-bold mb-6 capitalize text-[#0d3b5e] border-b pb-4">{pageData.title}</h2>
-                            <div className="text-gray-700 leading-relaxed whitespace-pre-wrap">{pageData.content}</div>
-                            <button onClick={() => setView({type: 'home'})} className="mt-8 text-blue-600 hover:underline flex items-center">
-                                <Icon name="ArrowLeft" className="w-4 h-4 mr-1" /> Return Home
-                            </button>
-                         </div>
-                    );
-                }
-                
-                return null;
+            // --- ICONS MAPPING ---
+            const Icons = {
+                Waves: 'waves', Search: 'search', ChevronDown: 'chevron-down', Ruler: 'ruler',
+                ArrowDownToLine: 'arrow-down-to-line', Sprout: 'sprout', Eye: 'eye',
+                Calendar: 'calendar', Coins: 'coins', ExternalLink: 'external-link',
+                Bird: 'bird', ChevronRight: 'chevron-right', ArrowLeft: 'arrow-left',
+                Fish: 'fish', Anchor: 'anchor', Users: 'users', FileText: 'file-text',
+                Mail: 'mail', Grid: 'grid'
             };
 
-            return (
-                <div className="min-h-screen flex flex-col font-sans text-gray-800 bg-[#f5f0e6]">
-                    <Navbar title={db.headerTitle} setView={setView} />
-                    <main className="flex-grow w-full">
-                        {renderContent()}
-                    </main>
-                    <Footer data={db.footer} />
+            const Icon = ({ name, className }) => {
+                const iconName = Icons[name] || 'help-circle';
+                // Lucide uses <i> tags or replaces elements. We use <i> with data attribute.
+                return <i data-lucide={iconName} className={className}></i>;
+            };
+
+            // --- COMPONENTS ---
+            
+            const Navbar = ({ title, setView }) => (
+                <header className="bg-[#0d3b5e] text-white py-3 px-6 shadow-md sticky top-0 z-50">
+                    <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+                        <div className="flex items-center gap-3 cursor-pointer" onClick={() => setView({ type: 'home' })}>
+                            <div className="bg-white rounded-full p-1 w-10 h-10 flex items-center justify-center text-[#0d3b5e]">
+                                <Icon name="Waves" className="w-6 h-6" />
+                            </div>
+                            <h1 className="text-xl font-bold tracking-tight">{title}</h1>
+                        </div>
+                        <nav className="flex items-center gap-5 text-sm font-medium">
+                            <button onClick={() => setView({ type: 'home' })} className="hover:text-gray-300">Home</button>
+                            <button onClick={() => setView({ type: 'page', id: 'about' })} className="hover:text-gray-300">About Project</button>
+                            <button onClick={() => setView({ type: 'page', id: 'team' })} className="hover:text-gray-300">Team</button>
+                            <button onClick={() => setView({ type: 'page', id: 'submit' })} className="hover:text-gray-300">Submit Data</button>
+                            <button onClick={() => setView({ type: 'page', id: 'contact' })} className="hover:text-gray-300">Contact Us</button>
+                        </nav>
+                    </div>
+                </header>
+            );
+
+            const Footer = ({ data }) => (
+                <footer className="bg-[#0d3b5e] text-white py-8 text-center mt-auto">
+                    <div className="max-w-7xl mx-auto px-4">
+                        <p className="font-semibold mb-2">{data.copyright}</p>
+                        <p className="text-sm text-gray-300">{data.attribution}</p>
+                    </div>
+                </footer>
+            );
+
+            const CategoryGrid = ({ categories, onSelect }) => (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-6">
+                    {categories.map(cat => (
+                        <div key={cat.id} onClick={() => onSelect(cat.id)} className="bg-white rounded-lg shadow-sm hover:shadow-md transition cursor-pointer overflow-hidden border border-gray-200 group">
+                            <div className="h-32 bg-gray-100 relative">
+                                <img src={cat.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                                <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition"></div>
+                            </div>
+                            <div className="p-3 text-center">
+                                <h3 className="font-bold text-gray-800 group-hover:text-blue-700">{cat.name}</h3>
+                            </div>
+                        </div>
+                    ))}
                 </div>
             );
-        };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+            const ListGrid = ({ items, onSelect, title, backAction }) => (
+                <div className="max-w-7xl mx-auto p-6">
+                    <button onClick={backAction} className="flex items-center text-blue-700 mb-4 font-semibold hover:underline">
+                        <Icon name="ArrowLeft" className="w-4 h-4 mr-1" /> Back
+                    </button>
+                    <h2 className="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">{title}</h2>
+                    {items && items.length > 0 ? (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                            {items.map(item => (
+                                <div key={item.id} onClick={() => onSelect(item.id)} className="bg-white rounded-lg shadow-sm hover:shadow-md transition cursor-pointer overflow-hidden border border-gray-200 group">
+                                    <div className="h-48 bg-gray-100">
+                                        <img src={item.image} className="w-full h-full object-cover" />
+                                    </div>
+                                    <div className="p-4">
+                                        <h3 className="font-bold text-lg text-gray-800 leading-tight mb-1 group-hover:text-blue-700">{item.common || item.commonName}</h3>
+                                        <p className="text-sm text-gray-500 italic">{item.name || item.scientificName}</p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    ) : (
+                        <div className="text-center py-20 text-gray-500 bg-white rounded border border-dashed">
+                            No entries found in this category yet.
+                        </div>
+                    )}
+                </div>
+            );
+
+            // --- MAIN APP LOGIC ---
+            const App = () => {
+                const [view, setView] = useState({ type: 'home' });
+                const [db, setDb] = useState(INITIAL_DB);
+
+                // Effect to refresh icons
+                useEffect(() => {
+                    // Slight delay to ensure DOM is ready for Lucide to scan
+                    if (window.lucide) {
+                        setTimeout(() => window.lucide.createIcons(), 50);
+                    }
+                }, [view]);
+
+                const renderContent = () => {
+                    if (view.type === 'home') {
+                        return (
+                            <div className="max-w-7xl mx-auto w-full">
+                                <div className="p-6 text-center">
+                                    <h2 className="text-3xl font-bold text-[#0d3b5e] mb-2">Explore Marine Life</h2>
+                                    <p className="text-gray-600">Select a category to view families and species</p>
+                                </div>
+                                <CategoryGrid categories={db.categories} onSelect={(id) => setView({ type: 'category', id })} />
+                            </div>
+                        );
+                    }
+                    
+                    if (view.type === 'category') {
+                        const catId = view.id;
+                        const catName = db.categories.find(c => c.id === catId)?.name;
+                        const families = db.families[catId] || [];
+                        return <ListGrid title={catName + " Families"} items={families} onSelect={(fid) => setView({ type: 'family', catId, id: fid })} backAction={() => setView({ type: 'home' })} />;
+                    }
+
+                    if (view.type === 'family') {
+                        const famId = view.id;
+                        const famName = db.families[view.catId]?.find(f => f.id === famId)?.name;
+                        const species = db.speciesList[famId] || [];
+                        return <ListGrid title={famName + " Species"} items={species} onSelect={(sid) => setView({ type: 'species', catId: view.catId, famId, id: sid })} backAction={() => setView({ type: 'category', id: view.catId })} />;
+                    }
+
+                    if (view.type === 'species') {
+                        // For this template, we default to the filled-out "Palk Bay Seahorse" data if ID matches, or show a generic placeholder
+                        const spData = db.speciesDetails[view.id] || db.speciesDetails['h_palkensis']; 
+                        
+                        return (
+                            <div className="max-w-7xl mx-auto w-full p-4">
+                                <button onClick={() => setView({ type: 'family', catId: view.catId, id: view.famId })} className="flex items-center text-blue-700 mb-4 font-semibold hover:underline">
+                                    <Icon name="ArrowLeft" className="w-4 h-4 mr-1" /> Back to Family
+                                </button>
+                                
+                                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                                    {/* Left Sidebar */}
+                                    <aside className="lg:col-span-3 space-y-4">
+                                        <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+                                            <h2 className="font-bold text-lg mb-4 text-gray-800 border-b pb-2">Quick Facts</h2>
+                                            <div className="mb-4 flex justify-center">
+                                                <div className="relative w-48 h-56">
+                                                    <img src={spData.images.illustration} className="w-full h-full object-contain filter grayscale opacity-90 mix-blend-multiply" style={{transform: 'scaleX(-1)'}} />
+                                                </div>
+                                            </div>
+                                            <div className="mb-4">
+                                                <h3 className="font-bold text-lg leading-tight">{spData.commonName}</h3>
+                                                <p className="italic text-gray-600 text-sm mb-2">{spData.scientificName}</p>
+                                            </div>
+                                            <div className="bg-[#ff6b35] text-white rounded px-2 py-1 inline-block text-xs font-bold mb-6 uppercase">IUCN: {spData.iucnStatus}</div>
+                                            <hr className="border-gray-200 mb-4" />
+                                            <div className="space-y-3 text-sm text-gray-700">
+                                                {Object.entries(spData.quickFacts).map(([k, v]) => (
+                                                    <div key={k} className="flex items-center gap-3">
+                                                        <Icon name="Ruler" className="w-4 h-4 text-teal-600" /> 
+                                                        <div><span className="font-semibold block text-xs text-gray-500 capitalize">{k}</span><span>{v}</span></div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </aside>
+
+                                    {/* Main Content */}
+                                    <section className="lg:col-span-6 space-y-4">
+                                        <div className="bg-white p-1 rounded shadow-sm border border-gray-200">
+                                            <div className="relative w-full h-80 rounded overflow-hidden">
+                                                <img src={spData.images.main} className="w-full h-full object-cover" />
+                                            </div>
+                                        </div>
+                                        <div className="bg-white rounded-lg shadow-sm p-6 border border-gray-200">
+                                            <h3 className="font-bold text-xl mb-3 text-gray-800">{spData.description.title}</h3>
+                                            <p className="text-gray-700 leading-relaxed text-sm whitespace-pre-wrap">{spData.description.text}</p>
+                                        </div>
+                                    </section>
+
+                                    {/* Right Sidebar */}
+                                    <aside className="lg:col-span-3 space-y-4">
+                                        <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-200">
+                                            <h3 className="font-bold text-md mb-3 text-gray-800 border-b pb-2">Scientific Classification</h3>
+                                            <table className="w-full text-sm text-gray-700">
+                                                <tbody>
+                                                    {Object.entries(spData.classification).map(([k,v]) => (
+                                                        <tr key={k}><td className="py-1 text-gray-500 text-xs font-semibold capitalize">{k}:</td><td className="py-1 text-right italic">{v}</td></tr>
+                                                    ))}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </aside>
+                                </div>
+                            </div>
+                        );
+                    }
+
+                    if (view.type === 'page') {
+                        const pageData = db.pages[view.id] || { title: "Page Not Found", content: "This page does not exist." };
+                        return (
+                             <div className="max-w-4xl mx-auto p-10 bg-white shadow-sm mt-6 min-h-[50vh]">
+                                <h2 className="text-3xl font-bold mb-6 capitalize text-[#0d3b5e] border-b pb-4">{pageData.title}</h2>
+                                <div className="text-gray-700 leading-relaxed whitespace-pre-wrap">{pageData.content}</div>
+                                <button onClick={() => setView({type: 'home'})} className="mt-8 text-blue-600 hover:underline flex items-center">
+                                    <Icon name="ArrowLeft" className="w-4 h-4 mr-1" /> Return Home
+                                </button>
+                             </div>
+                        );
+                    }
+                    
+                    return null;
+                };
+
+                return (
+                    <div className="min-h-screen flex flex-col font-sans text-gray-800 bg-[#f5f0e6]">
+                        <Navbar title={db.headerTitle} setView={setView} />
+                        <main className="flex-grow w-full">
+                            {renderContent()}
+                        </main>
+                        <Footer data={db.footer} />
+                    </div>
+                );
+            };
+
+            const root = ReactDOM.createRoot(document.getElementById('root'));
+            root.render(<App />);
+        
+        } catch (err) {
+            document.getElementById('error-boundary').style.display = 'block';
+            document.getElementById('error-boundary').innerHTML = '<strong>Bootstrap Error:</strong> ' + err.message;
+            console.error(err);
+        }
     </script>
 </body>
 </html>
